@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CartFragment extends Fragment implements CartAdapter.CartUpdateListener {
+
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private List<Product> cartProductList;
@@ -58,11 +59,23 @@ public class CartFragment extends Fragment implements CartAdapter.CartUpdateList
             updateCartSummary();
         }
 
-        checkoutButton.setOnClickListener(v -> {
-            // Xử lý sự kiện thanh toán tại đây
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToPaymentFragment();
+            }
         });
 
         return view;
+    }
+
+    private void navigateToPaymentFragment() {
+        // Chuyển sang màn hình PaymentFragment để thanh toán
+        PaymentFragment paymentFragment = new PaymentFragment();
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.container, paymentFragment)
+                .addToBackStack(null)  // Thêm vào stack để có thể quay lại khi cần
+                .commit();
     }
 
     @Override
