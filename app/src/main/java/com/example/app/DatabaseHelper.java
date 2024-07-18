@@ -13,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableQuery = "CREATE TABLE IF NOT EXISTS Accounts " +
@@ -49,6 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return count > 0;
+    }
+
+    // Cập nhật mật khẩu
+    public void updatePassword(String username, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", newPassword);
+        db.update("Accounts", values, "username=?", new String[]{username});
+        db.close();
     }
 
 }

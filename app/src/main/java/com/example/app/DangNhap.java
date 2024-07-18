@@ -30,8 +30,6 @@ public class DangNhap extends AppCompatActivity {
         edtTK = findViewById(R.id.edtTK);
         edtMK = findViewById(R.id.edtMK);
 
-        // khi nhấn vào nút Đăng nhập
-        // khi nhấn vào nút Đăng nhập
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +39,7 @@ public class DangNhap extends AppCompatActivity {
                 // Kiểm tra đăng nhập
                 if (checkLogin(username, password)) {
                     // Đăng nhập thành công
-                    saveLoginInfo(username);
+                    saveLoginInfo(username, password);
                     Toast.makeText(DangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
                     // Chuyển sang MainActivity hoặc màn hình chính
@@ -55,8 +53,6 @@ public class DangNhap extends AppCompatActivity {
             }
         });
 
-
-        // khi nhấn vào TextView Đăng ký
         tvDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,17 +60,17 @@ public class DangNhap extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-    private boolean checkLogin(String username, String password) {
 
+    private boolean checkLogin(String username, String password) {
         return databaseHelper.checkUser(username, password);
     }
 
-    private void saveLoginInfo(String username) {
+    private void saveLoginInfo(String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", username);
+        editor.putString("password", password); // Lưu mật khẩu
         editor.apply();
     }
 }

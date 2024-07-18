@@ -20,6 +20,7 @@ public class UserFragment extends Fragment {
     private ImageView avatarImageView;
     private TextView usernameTextView;
     private TextView donMuaTextView;
+    private LinearLayout doiMatKhauLayout;
     private LinearLayout dangXuatLayout;
 
     @Override
@@ -31,6 +32,7 @@ public class UserFragment extends Fragment {
         avatarImageView = view.findViewById(R.id.avatarImageView);
         usernameTextView = view.findViewById(R.id.usernameTextView);
         donMuaTextView = view.findViewById(R.id.donMuaTextView);
+        doiMatKhauLayout = view.findViewById(R.id.doiMatKhauLayout);
         dangXuatLayout = view.findViewById(R.id.dangXuatLayout);
 
         // Đọc thông tin đăng nhập từ SharedPreferences
@@ -40,6 +42,15 @@ public class UserFragment extends Fragment {
         // Hiển thị thông tin tài khoản
         usernameTextView.setText(username);
         avatarImageView.setImageResource(R.drawable.avatar); // thay avatar bằng resource của bạn
+
+        // Đổi mật khẩu
+        doiMatKhauLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Đăng xuất
         dangXuatLayout.setOnClickListener(new View.OnClickListener() {

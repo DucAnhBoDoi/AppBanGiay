@@ -31,7 +31,6 @@ public class DangKy extends AppCompatActivity {
         btnDangKy = findViewById(R.id.btnDangKy);
         tvDangNhap = findViewById(R.id.tvDangNhap);
 
-
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +52,7 @@ public class DangKy extends AppCompatActivity {
                 databaseHelper.insertData(username, password);
 
                 // Lưu thông tin đăng nhập
-                saveLoginInfo(username);
+                saveLoginInfo(username, password);
 
                 Toast.makeText(DangKy.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                 finish();
@@ -68,10 +67,11 @@ public class DangKy extends AppCompatActivity {
         });
     }
 
-    private void saveLoginInfo(String username) {
+    private void saveLoginInfo(String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", username);
+        editor.putString("password", password); // Lưu mật khẩu
         editor.apply();
     }
 }
