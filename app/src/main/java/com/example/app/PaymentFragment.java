@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PaymentFragment extends Fragment {
 
     private RadioGroup radioGroupPaymentMethods;
@@ -39,23 +42,25 @@ public class PaymentFragment extends Fragment {
     private void handlePaymentConfirmation() {
         int selectedPaymentMethodId = radioGroupPaymentMethods.getCheckedRadioButtonId();
 
-        // Xóa hết các sản phẩm trong giỏ hàng
-        CartManager.getInstance().clearCart();
+        // Lưu trữ danh sách sản phẩm đã thanh toán
+        List<Product> purchasedProducts = new ArrayList<>(CartManager.getInstance().getCartProductList());
+        CartManager.getInstance().clearCart();  // Xóa sản phẩm trong giỏ hàng
+        CartManager.getInstance().addPurchasedProducts(purchasedProducts);
 
         // Hiển thị thông báo thanh toán thành công
         Toast.makeText(getContext(), "Đã thanh toán thành công", Toast.LENGTH_SHORT).show();
 
-        // Chuyển về màn hình CartFragment
-        getParentFragmentManager().popBackStack(); // Đóng fragment hiện tại (PaymentFragment)
-        CartFragment cartFragment = new CartFragment();
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.container, cartFragment)
-                .commit();
-
-        // Cập nhật lại badge trên MainActivity
+        // Cập nhật badge trên MainActivity
         MainActivity mainActivity = (MainActivity) getActivity();
         if (mainActivity != null) {
             mainActivity.updateCartBadge();
         }
+
+        // Chuyển đến màn hình ChoXacNhanFragment
+        ChoXacNhanFragment choXacNhanFragment = new ChoXacNhanFragment();
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.container, choXacNhanFragment)
+                .addToBackStack(null)  // Thêm vào stack để có thể quay lại khi cần
+                .commit();
     }
 }

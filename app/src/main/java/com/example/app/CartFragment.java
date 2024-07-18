@@ -28,10 +28,6 @@ public class CartFragment extends Fragment implements CartAdapter.CartUpdateList
     private LinearLayout cartSummaryLayout;
     private Button checkoutButton;
 
-    public CartFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,11 +66,10 @@ public class CartFragment extends Fragment implements CartAdapter.CartUpdateList
     }
 
     private void navigateToPaymentFragment() {
-        // Chuyển sang màn hình PaymentFragment để thanh toán
         PaymentFragment paymentFragment = new PaymentFragment();
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.container, paymentFragment)
-                .addToBackStack(null)  // Thêm vào stack để có thể quay lại khi cần
+                .addToBackStack(null)
                 .commit();
     }
 

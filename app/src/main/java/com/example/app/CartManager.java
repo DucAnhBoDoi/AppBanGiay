@@ -5,40 +5,37 @@ import java.util.List;
 
 public class CartManager {
     private static CartManager instance;
-    private List<Product> cartProductList;
-    private int cartItemCount = 0;
+    private List<Product> cartProductList = new ArrayList<>();
+    private List<Product> purchasedProductList = new ArrayList<>();
 
-    private CartManager() {
-        cartProductList = new ArrayList<>();
-    }
-
-    public static synchronized CartManager getInstance() {
+    public static CartManager getInstance() {
         if (instance == null) {
             instance = new CartManager();
         }
         return instance;
     }
 
-    public void addProductToCart(Product product) {
-        cartProductList.add(product);
-        cartItemCount++;
-    }
-
-    public void removeProductFromCart(Product product) {
-        cartProductList.remove(product);
-        cartItemCount--;
-    }
-
-    public int getCartItemCount() {
-        return cartItemCount;
-    }
-
     public List<Product> getCartProductList() {
         return cartProductList;
     }
 
+    public void addProductToCart(Product product) {
+        cartProductList.add(product);
+    }
+
+    public void removeProductFromCart(Product product) {
+        cartProductList.remove(product);
+    }
+
     public void clearCart() {
         cartProductList.clear();
-        cartItemCount = 0;
+    }
+
+    public List<Product> getPurchasedProductList() {
+        return purchasedProductList;
+    }
+
+    public void addPurchasedProducts(List<Product> products) {
+        purchasedProductList.addAll(products);
     }
 }

@@ -40,12 +40,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.productSizeTextView.setText("Kích thước: " + product.getSelectedSize());
         holder.productQuantityTextView.setText("Số lượng: " + product.getQuantity());
 
+        // Hiển thị hoặc ẩn nút xóa nếu cần
+        holder.deleteProductButton.setVisibility(View.VISIBLE);
+
         holder.deleteProductButton.setOnClickListener(v -> {
+            // Xóa sản phẩm khỏi danh sách
             cartProductList.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, cartProductList.size());
-            notifyDataSetChanged(); // Cập nhật lại RecyclerView
 
+            // Cập nhật lại dữ liệu trong CartManager
             CartManager.getInstance().removeProductFromCart(product);
 
             // Gọi callback để cập nhật giỏ hàng

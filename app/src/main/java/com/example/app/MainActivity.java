@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private CartFragment cartFragment = new CartFragment();
     private HomeFragment homeFragment = new HomeFragment();
     private UserFragment userFragment = new UserFragment();
+    private ChoXacNhanFragment choXacNhanFragment = new ChoXacNhanFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.cart:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, cartFragment).commit();
-                        updateCartBadge(); // Cập nhật badge khi chuyển sang Fragment giỏ hàng
+                        updateCartBadge();
                         return true;
                 }
                 return false;
@@ -48,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateCartBadge() {
-        int cartItemCount = CartManager.getInstance().getCartItemCount();
+        int cartItemCount = CartManager.getInstance().getCartProductList().size();
         BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.cart);
-        badge.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.purple_500)); // Set badge background color
+        badge.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.purple_500));
         badge.setVisible(cartItemCount > 0);
         badge.setNumber(cartItemCount);
     }
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Update cart badge when MainActivity resumes
         updateCartBadge();
     }
 }

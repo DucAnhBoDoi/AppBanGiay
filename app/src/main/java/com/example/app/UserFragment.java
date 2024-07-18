@@ -22,6 +22,7 @@ public class UserFragment extends Fragment {
     private TextView donMuaTextView;
     private LinearLayout doiMatKhauLayout;
     private LinearLayout dangXuatLayout;
+    private LinearLayout donMuaLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +35,7 @@ public class UserFragment extends Fragment {
         donMuaTextView = view.findViewById(R.id.donMuaTextView);
         doiMatKhauLayout = view.findViewById(R.id.doiMatKhauLayout);
         dangXuatLayout = view.findViewById(R.id.dangXuatLayout);
+        donMuaLayout = view.findViewById(R.id.donMuaLayout);
 
         // Đọc thông tin đăng nhập từ SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LoginPrefs", getContext().MODE_PRIVATE);
@@ -57,6 +59,15 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showLogoutConfirmationDialog();
+            }
+        });
+
+        // Đơn mua
+        donMuaLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DonMua.class);
+                startActivity(intent);
             }
         });
 
